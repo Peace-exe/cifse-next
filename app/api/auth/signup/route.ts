@@ -14,7 +14,7 @@ export async function POST(req:Request){
         const userData = await new User({
             name:name,
             email:email,
-            password:passwordHash
+            passwordHash:passwordHash
         }).save();
         
         return Response.json({

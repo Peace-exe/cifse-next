@@ -7,8 +7,9 @@ import Session from "./session";
 export interface UserInterface extends Document{
     name:string;
     email:string;
-    password:string;
+    passwordHash:string;
     createdAt:Date;
+    validatePassword(passwordInputByUser:string): Promise<boolean>;
 }
 
 const userSchema = new Schema<UserInterface>({
@@ -31,7 +32,7 @@ const userSchema = new Schema<UserInterface>({
             }
         }
     },
-    password:{
+    passwordHash:{
         type:String,
         trim:true,
         required:true,
@@ -45,29 +46,38 @@ const userSchema = new Schema<UserInterface>({
 
 },{timestamps:true})
 
-userSchema.methods.validatePassword = async function(passwordInputByUser : string){
+userSchema.methods.validatePassword = async function(passwordInputByUser : string): Promise<boolean>{
     const user= this;
-    const passwordHash= user.password;
+    const passwordHash= user.passwordHash;
    const isPasswordValid= await bcrypt.compare(passwordInputByUser, passwordHash);
    return isPasswordValid;
 }
 
-userSchema.methods.getRefreshToken = async function(){
+userSchema.methods.getRefreshToken = async function () {
+  const user = this;
+  const tokenId = crypto.randomUUID();
+  const familyId = crypto.randomUUID();
+
+  await Session.create({
+    tokenId,
+    userId: user._id,
+    familyId,
+    expiresAt: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
+  });
+
+  const token = jwt.sign(
+    { tokenId, userId: user._id, familyId },
+    process.env.REFRESH_TOKEN_KEY!,
+    { expiresIn: "15d" }
+  );
+
+  return token;
+};
+
+userSchema.methods.getAccessToken = async function(){
     const user = this;
-    const tokenId = crypto.randomUUID();
-    const familyId = crypto.randomUUID();
 
-    Session.create({
-        tokenId:tokenId,
-        userId: user._id,
-        familyId:familyId,
-        
-    })
-
-    const token = await jwt.sign({
-        _id:user.id
-    })
-}
+};
 const User : Model<UserInterface> = mongoose.models.User || mongoose.model<UserInterface>('User', userSchema);
 
 export default User;
