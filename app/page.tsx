@@ -6,6 +6,7 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ApplyNow from "@/components/ApplyNow";
+import FAQSection from "@/components/FAQ";
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <WhyChooseUs />
         <ApplyNow />
         <Contact />
+        <FAQSection/>
       </div>
       <Footer />
     </div>
