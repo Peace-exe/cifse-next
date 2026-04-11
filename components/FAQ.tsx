@@ -71,7 +71,7 @@ export default function FAQSection() {
               className="border-t border-border py-7 cursor-pointer"
               onClick={() => toggle(i)}
             >
-              <div className="flex items-start gap-5">
+              <div className="flex items-start gap-5 hover:text-red-600">
                 <span
                   className="text-xl shrink-0 transition-transform duration-300 inline-block"
                   style={{
@@ -80,7 +80,7 @@ export default function FAQSection() {
                 >
                   ›
                 </span>
-                <div className="flex-1">
+                <div className="flex-1 ">
                   <p className="text-base italic leading-relaxed">
                     {faq.question}
                   </p>

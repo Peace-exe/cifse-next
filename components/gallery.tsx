@@ -1,150 +1,169 @@
-import { ArrowLeft, Download, Eye, Calendar, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import Link from "next/link";
+"use client";
 
-const galleryImages = [
-  { id: 1, src: "/placeholder.svg?height=300&width=400", title: "Fire Safety Training Session", date: "2024-01-15", location: "Main Campus" },
-  { id: 2, src: "/placeholder.svg?height=300&width=400", title: "Fire Extinguisher Demo", date: "2024-01-12", location: "Training Ground" },
-  { id: 3, src: "/placeholder.svg?height=300&width=400", title: "Graduation Ceremony 2024", date: "2024-01-10", location: "Auditorium" },
-  { id: 4, src: "/placeholder.svg?height=300&width=400", title: "Safety Equipment Lab", date: "2024-01-08", location: "Lab Building" },
-  { id: 5, src: "/placeholder.svg?height=300&width=400", title: "Emergency Evacuation Drill", date: "2024-01-05", location: "Campus Wide" },
-  { id: 6, src: "/placeholder.svg?height=300&width=400", title: "Hazmat Safety Training", date: "2024-01-03", location: "Specialized Lab" },
-  { id: 7, src: "/placeholder.svg?height=300&width=400", title: "Annual Safety Conference", date: "2023-12-20", location: "Conference Hall" },
-  { id: 8, src: "/placeholder.svg?height=300&width=400", title: "Fire Simulation Training", date: "2023-12-18", location: "Simulation Center" },
-  { id: 9, src: "/placeholder.svg?height=300&width=400", title: "Excellence Awards 2023", date: "2023-12-15", location: "Main Hall" },
-  { id: 10, src: "/placeholder.svg?height=300&width=400", title: "Safety Workshop", date: "2023-12-10", location: "Workshop Hall" },
-  { id: 11, src: "/placeholder.svg?height=300&width=400", title: "Campus Safety Tour", date: "2023-12-08", location: "Campus" },
-  { id: 12, src: "/placeholder.svg?height=300&width=400", title: "Practical Examination", date: "2023-12-05", location: "Exam Center" },
+import { useState } from "react";
+import Image, { StaticImageData } from "next/image";
+import { XIcon, ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react";
+import gallery1 from "@/assets/gallery-(1).jpg";
+import gallery2 from "@/assets/gallery-(2).jpg";
+import gallery3 from "@/assets/gallery-(3).jpg";
+import gallery4 from "@/assets/gallery-(4).jpg";
+import gallery5 from "@/assets/gallery-(5).jpg";
+import gallery6 from "@/assets/gallery-(6).jpg";
+// add more imports here as needed:
+// import gallery7 from "@/assets/gallery-(7).jpg";
+
+const galleryItems: { src: StaticImageData; alt: string }[] = [
+  { src: gallery1, alt: "Gallery image 1" },
+  { src: gallery2, alt: "Gallery image 2" },
+  { src: gallery3, alt: "Gallery image 3" },
+  { src: gallery4, alt: "Gallery image 4" },
+  { src: gallery5, alt: "Gallery image 5" },
+  { src: gallery6, alt: "Gallery image 6" },
+  // add more here as you import them
 ];
 
-export default function GalleryPage() {
+const PAGE_SIZE = 9;
+
+const Gallery = () => {
+  const [lightbox, setLightbox] = useState<number | null>(null);
+  const [page, setPage] = useState(0);
+
+  const totalPages = Math.ceil(galleryItems.length / PAGE_SIZE);
+  const currentItems = galleryItems.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
+
+  const handlePrev = () => setPage((p) => Math.max(0, p - 1));
+  const handleNext = () => setPage((p) => Math.min(totalPages - 1, p + 1));
+
+  const lightboxPrev = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setLightbox((l) => (l !== null ? Math.max(0, l - 1) : null));
+  };
+
+  const lightboxNext = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setLightbox((l) => (l !== null ? Math.min(galleryItems.length - 1, l + 1) : null));
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background">
+
       {/* Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-white shadow-sm">
-        <div className="container flex h-16 items-center justify-between px-4">
-          <Link
-            href="/"
-            className="flex items-center space-x-2 hover:text-red-600 transition-colors"
-          >
-            <ArrowLeft className="h-5 w-5" />
-            <span className="font-medium">Back to Home</span>
-          </Link>
-          <div className="text-center">
-            <h1 className="text-xl font-bold text-gray-900">Photo Gallery</h1>
-            <p className="text-xs text-gray-500">FireSafe Institute</p>
-          </div>
-          <div className="w-24" />
-        </div>
+      <header className="py-16 md:py-24 text-center px-6">
+        <p className="font-sans text-sm uppercase tracking-[0.3em] text-muted-foreground font-medium mb-4">
+          Campus Life & Events
+        </p>
+        <h1 className="bold font-sans tracking-tight text-4xl md:text-6xl font-bold text-foreground leading-tight">
+          Photo Gallery
+        </h1>
+        <div className="mt-4 mx-auto w-16 h-px bg-foreground/30" />
+        <p className="mt-6 font-sans text-muted-foreground max-w-lg mx-auto text-base leading-relaxed">
+          A visual chronicle of academic achievements, cultural events, institutional milestones, and campus life at our institute.
+        </p>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
-        {/* Hero Section */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4 text-gray-900">
-            Our Journey in Fire Safety Education
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover moments that define our commitment to excellence in fire
-            safety training and education.
-          </p>
-        </div>
-
-        {/* Gallery Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-12">
-          {galleryImages.map((image) => (
-            <Card
-              key={image.id}
-              className="group overflow-hidden bg-white transition-all duration-300 hover:scale-[1.02] hover:shadow-xl"
-            >
-              <div className="relative aspect-4/3 overflow-hidden">
-                <img
-                  src={image.src}
-                  alt={image.title}
-                  width={400}
-                  height={300}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="flex space-x-2">
-                    <Button size="sm" className="bg-white text-gray-900 hover:bg-gray-100">
-                      <Eye className="h-4 w-4 mr-1" />
-                      View
-                    </Button>
-                    <Button size="sm" className="bg-white text-gray-900 hover:bg-gray-100">
-                      <Download className="h-4 w-4 mr-1" />
-                      Save
-                    </Button>
-                  </div>
-                </div>
-              </div>
-              <CardContent className="p-4">
-                <h3 className="font-semibold text-gray-900 mb-2 line-clamp-1 group-hover:text-red-600 transition-colors">
-                  {image.title}
-                </h3>
-                <div className="space-y-1">
-                  <div className="flex items-center text-sm text-gray-500">
-                    <Calendar className="h-3 w-3 mr-1" />
-                    <span>{new Date(image.date).toLocaleDateString()}</span>
-                  </div>
-                  <div className="flex items-center text-sm text-gray-500">
-                    <MapPin className="h-3 w-3 mr-1" />
-                    <span className="line-clamp-1">{image.location}</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Stats Section */}
-        <div className="bg-white rounded-lg shadow-sm border p-8 mb-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div>
-              <div className="text-3xl font-bold text-red-600 mb-1">500+</div>
-              <div className="text-sm text-gray-600">Photos</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-red-600 mb-1">50+</div>
-              <div className="text-sm text-gray-600">Events</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-red-600 mb-1">1000+</div>
-              <div className="text-sm text-gray-600">Students</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-red-600 mb-1">10+</div>
-              <div className="text-sm text-gray-600">Years</div>
+      {/* Masonry Grid */}
+      <main className="max-w-7xl mx-auto px-6 pb-12 columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5">
+        {currentItems.map((item, idx) => (
+          <div
+            key={idx}
+            className="break-inside-avoid group cursor-pointer"
+            onClick={() => setLightbox(page * PAGE_SIZE + idx)}
+          >
+            <div className="relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-shadow duration-500">
+              <Image
+                src={item.src}
+                alt={item.alt}
+                loading="lazy"
+                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+              />
             </div>
           </div>
-        </div>
+        ))}
+      </main>
 
-        {/* Load More Button */}
-        <div className="text-center">
-          <Button
-            size="lg"
-            variant="outline"
-            className="hover:bg-red-50 hover:text-red-600 hover:border-red-200 bg-transparent"
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-4 pb-16">
+          <button
+            onClick={handlePrev}
+            disabled={page === 0}
+            className="w-9 h-9 rounded-full border border-border flex items-center justify-center disabled:opacity-30 hover:bg-muted transition-colors"
           >
-            Load More Photos
-          </Button>
-        </div>
-      </div>
+            <ArrowLeftIcon size={16} weight="bold" />
+          </button>
 
-      {/* Footer CTA */}
-      <div className="bg-red-600 text-white py-12 mt-16">
-        <div className="container mx-auto px-4 text-center">
-          <h3 className="text-2xl font-bold mb-4">Ready to Join Our Community?</h3>
-          <p className="text-lg mb-6 opacity-90">
-            Start your journey in fire safety education with us today.
-          </p>
-          <Button size="lg" className="bg-white text-red-600 hover:bg-gray-100">
-            Enroll Now
-          </Button>
+          <div className="flex gap-2">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setPage(i)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  i === page ? "bg-foreground w-5" : "bg-border"
+                }`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={handleNext}
+            disabled={page === totalPages - 1}
+            className="w-9 h-9 rounded-full border border-border flex items-center justify-center disabled:opacity-30 hover:bg-muted transition-colors"
+          >
+            <ArrowRightIcon size={16} weight="bold" />
+          </button>
         </div>
-      </div>
+      )}
+
+      {/* Lightbox */}
+      {lightbox !== null && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-6"
+          onClick={() => setLightbox(null)}
+        >
+          {/* Close */}
+          <button
+            className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors"
+            onClick={() => setLightbox(null)}
+          >
+            <XIcon size={32} weight="bold" />
+          </button>
+
+          {/* Prev */}
+          {lightbox > 0 && (
+            <button
+              className="absolute left-4 md:left-8 text-white/70 hover:text-white transition-colors"
+              onClick={lightboxPrev}
+            >
+              <ArrowLeftIcon size={32} weight="bold" />
+            </button>
+          )}
+
+          {/* Image */}
+          <Image
+            src={galleryItems[lightbox].src}
+            alt={galleryItems[lightbox].alt}
+            className="max-h-[85vh] max-w-[85vw] object-contain rounded-lg shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          />
+
+          {/* Next */}
+          {lightbox < galleryItems.length - 1 && (
+            <button
+              className="absolute right-4 md:right-8 text-white/70 hover:text-white transition-colors"
+              onClick={lightboxNext}
+            >
+              <ArrowRightIcon size={32} weight="bold" />
+            </button>
+          )}
+
+          {/* Counter */}
+          <p className="absolute bottom-6 text-white/50 text-sm font-sans">
+            {lightbox + 1} / {galleryItems.length}
+          </p>
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default Gallery;

@@ -7,6 +7,7 @@ import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ApplyNow from "@/components/ApplyNow";
 import FAQSection from "@/components/FAQ";
+import Announcements from "@/components/Announcements";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <div className="flex-1">
         <HeroSection />
         <AboutSection />
+        <Announcements/>
         <Courses />
         <WhyChooseUs />
         <ApplyNow />
