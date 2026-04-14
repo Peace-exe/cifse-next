@@ -1,35 +1,30 @@
 "use client";
 
-import { useState } from "react";
-import Image, { StaticImageData } from "next/image";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import { XIcon, ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react";
-import gallery1 from "@/assets/gallery-(1).jpg";
-import gallery2 from "@/assets/gallery-(2).jpg";
-import gallery3 from "@/assets/gallery-(3).jpg";
-import gallery4 from "@/assets/gallery-(4).jpg";
-import gallery5 from "@/assets/gallery-(5).jpg";
-import gallery6 from "@/assets/gallery-(6).jpg";
-// add more imports here as needed:
-// import gallery7 from "@/assets/gallery-(7).jpg";
 
-const galleryItems: { src: StaticImageData; alt: string }[] = [
-  { src: gallery1, alt: "Gallery image 1" },
-  { src: gallery2, alt: "Gallery image 2" },
-  { src: gallery3, alt: "Gallery image 3" },
-  { src: gallery4, alt: "Gallery image 4" },
-  { src: gallery5, alt: "Gallery image 5" },
-  { src: gallery6, alt: "Gallery image 6" },
-  // add more here as you import them
-];
+const CLOUDINARY_BASE_URL = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto`;
 
 const PAGE_SIZE = 9;
 
 const Gallery = () => {
+  const [imageIds, setImageIds] = useState<string[]>([]);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [page, setPage] = useState(0);
 
-  const totalPages = Math.ceil(galleryItems.length / PAGE_SIZE);
-  const currentItems = galleryItems.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
+  const getImageIds = async () => {
+    const res = await fetch("/api/gallery");
+    const data = await res.json();
+    setImageIds(data.data.map((img: { public_id: string }) => img.public_id));
+  };
+
+  useEffect(() => {
+    getImageIds();
+  }, []);
+
+  const totalPages = Math.ceil(imageIds.length / PAGE_SIZE);
+  const currentItems = imageIds.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
 
   const handlePrev = () => setPage((p) => Math.max(0, p - 1));
   const handleNext = () => setPage((p) => Math.min(totalPages - 1, p + 1));
@@ -41,7 +36,7 @@ const Gallery = () => {
 
   const lightboxNext = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setLightbox((l) => (l !== null ? Math.min(galleryItems.length - 1, l + 1) : null));
+    setLightbox((l) => (l !== null ? Math.min(imageIds.length - 1, l + 1) : null));
   };
 
   return (
@@ -63,16 +58,18 @@ const Gallery = () => {
 
       {/* Masonry Grid */}
       <main className="max-w-7xl mx-auto px-6 pb-12 columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5">
-        {currentItems.map((item, idx) => (
+        {currentItems.map((public_id, idx) => (
           <div
-            key={idx}
+            key={public_id}
             className="break-inside-avoid group cursor-pointer"
             onClick={() => setLightbox(page * PAGE_SIZE + idx)}
           >
             <div className="relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-shadow duration-500">
               <Image
-                src={item.src}
-                alt={item.alt}
+                src={`${CLOUDINARY_BASE_URL}/${public_id}`}
+                alt={public_id}
+                width={800}
+                height={600}
                 loading="lazy"
                 className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
               />
@@ -120,7 +117,6 @@ const Gallery = () => {
           className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-6"
           onClick={() => setLightbox(null)}
         >
-          {/* Close */}
           <button
             className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors"
             onClick={() => setLightbox(null)}
@@ -128,7 +124,6 @@ const Gallery = () => {
             <XIcon size={32} weight="bold" />
           </button>
 
-          {/* Prev */}
           {lightbox > 0 && (
             <button
               className="absolute left-4 md:left-8 text-white/70 hover:text-white transition-colors"
@@ -138,16 +133,16 @@ const Gallery = () => {
             </button>
           )}
 
-          {/* Image */}
           <Image
-            src={galleryItems[lightbox].src}
-            alt={galleryItems[lightbox].alt}
+            src={`${CLOUDINARY_BASE_URL}/${imageIds[lightbox]}`}
+            alt={imageIds[lightbox]}
+            width={1200}
+            height={900}
             className="max-h-[85vh] max-w-[85vw] object-contain rounded-lg shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           />
 
-          {/* Next */}
-          {lightbox < galleryItems.length - 1 && (
+          {lightbox < imageIds.length - 1 && (
             <button
               className="absolute right-4 md:right-8 text-white/70 hover:text-white transition-colors"
               onClick={lightboxNext}
@@ -156,9 +151,8 @@ const Gallery = () => {
             </button>
           )}
 
-          {/* Counter */}
           <p className="absolute bottom-6 text-white/50 text-sm font-sans">
-            {lightbox + 1} / {galleryItems.length}
+            {lightbox + 1} / {imageIds.length}
           </p>
         </div>
       )}

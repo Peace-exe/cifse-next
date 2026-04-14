@@ -39,6 +39,7 @@ const Header = () => {
       }`}
     >
       <div className="container flex h-16 items-center justify-between max-w-360 mx-auto px-4">
+        <Link href="/">
         <div className="flex items-center space-x-2">
           <img
             src="/cifse-logo-no-bg2.png"
@@ -52,37 +53,38 @@ const Header = () => {
             </p>
           </div>
         </div>
+        </Link>
 
         <nav className="hidden md:flex items-center space-x-6">
-          <a href="#home" className="text-sm font-medium hover:text-red-600 transition-colors">Home</a>
+          <Link href="/" className="text-sm font-medium hover:text-red-600 transition-colors">Home</Link>
           <a href="#about" className="text-sm font-medium hover:text-red-600 transition-colors">About</a>
-          <a href="#courses" className="text-sm font-medium hover:text-red-600 transition-colors">Courses</a>
+          <Link href="/courses" className="text-sm font-medium hover:text-red-600 transition-colors">Courses</Link>
           <a href="#features" className="text-sm font-medium hover:text-red-600 transition-colors">Why Choose Us</a>
           <a href="#contact" className="text-sm font-medium hover:text-red-600 transition-colors">Contact</a>
 
           <NavigationMenu viewport={false}>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Resources</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="bg-inherit hover:bg-inherit focus:bg-inherit">Resources</NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-neutral-50 border border-gray-300 shadow-xl">
                   <ul className="grid gap-3 p-4 w-50">
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href="/gallery" className="block p-2 hover:bg-gray-100 rounded">
+                        <Link href="/gallery" className="block p-2 hover:bg-red-100 rounded">
                           Gallery
                         </Link>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href="/notice" className="block p-2 hover:bg-gray-100 rounded">
+                        <Link href="/notice" className="block p-2 hover:bg-red-100 rounded">
                           Notice
                         </Link>
                       </NavigationMenuLink>
                     </li>
                     <li>
                       <NavigationMenuLink asChild>
-                        <Link href="/faq" className="block p-2 hover:bg-gray-100 rounded">
+                        <Link href="/faq" className="block p-2 hover:bg-red-100 rounded">
                           FAQ
                         </Link>
                       </NavigationMenuLink>
