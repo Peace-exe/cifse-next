@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { XIcon, ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react";
+import Loading from "./Loading";
 
 const CLOUDINARY_BASE_URL = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/f_auto,q_auto`;
 
@@ -10,6 +11,7 @@ const PAGE_SIZE = 9;
 
 const Gallery = () => {
   const [imageIds, setImageIds] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [lightbox, setLightbox] = useState<number | null>(null);
   const [page, setPage] = useState(0);
 
@@ -17,6 +19,7 @@ const Gallery = () => {
     const res = await fetch("/api/gallery");
     const data = await res.json();
     setImageIds(data.data.map((img: { public_id: string }) => img.public_id));
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -38,6 +41,8 @@ const Gallery = () => {
     e.stopPropagation();
     setLightbox((l) => (l !== null ? Math.min(imageIds.length - 1, l + 1) : null));
   };
+
+  if(isLoading) return <Loading/>
 
   return (
     <div className="min-h-screen bg-background">
