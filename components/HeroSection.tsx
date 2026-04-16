@@ -5,7 +5,7 @@ import HeroSlideshow from "@/components/Slideshow";
 
 const HeroSection = () => {
   return (
-    <section id="home" className="w-full min-h-screen relative overflow-hidden shadow-xl">
+    <section id="home" className="w-full min-h-screen relative overflow-hidden">
       {/* Background Gradient */}
       <div
         className="absolute inset-0 z-0"
@@ -68,6 +68,12 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+      <div
+  className="absolute bottom-0 left-0 right-0 h-28 z-10"
+  style={{
+    background: `linear-gradient(to bottom, transparent, #ffffff)`,
+  }}
+/>
     </section>
   );
 };

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRightIcon, DownloadSimpleIcon } from "@phosphor-icons/react";
+import { ArrowRightIcon, DownloadSimpleIcon,FileArrowDownIcon } from "@phosphor-icons/react";
 
 const announcements = [
   {
