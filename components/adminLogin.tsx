@@ -17,7 +17,7 @@ export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle admin login logic here
     console.log("Admin login attempt:", { email, password });
@@ -25,7 +25,7 @@ export default function AdminLogin() {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4 ">
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
+      <div className="absolute inset-0 bg-grid-white/[0.02] bg-size-[50px_50px]" />
       <div className="relative w-full max-w-md">
         <Card className="w-full border border-neutral-800 bg-card shadow-2xl ">
           <CardHeader className="space-y-1 text-center">
