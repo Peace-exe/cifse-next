@@ -127,9 +127,9 @@ const Header = () => {
                 <div>
                   <p className="font-medium">Address</p>
                   <p className="text-sm text-gray-700">
-                    123 Safety Boulevard, Fire District
+                    995, Damodar Nagar, Barra, Near Yadav PCO, Kanpur
                     <br />
-                    New Delhi - 110001, India
+                    Uttar Pradesh - 208027, India
                   </p>
                 </div>
               </div>
@@ -138,7 +138,7 @@ const Header = () => {
                 <Phone className="h-5 w-5 text-red-600 mt-1" />
                 <div>
                   <p className="font-medium">Phone</p>
-                  <p className="text-sm text-gray-700">+91 11 2345 6789</p>
+                  <p className="text-sm text-gray-700">9451-397-737, 7310-176-777, 9451-442-632</p>
                 </div>
               </div>
 
@@ -147,7 +147,7 @@ const Header = () => {
                 <div>
                   <p className="font-medium">Email</p>
                   <p className="text-sm text-gray-700">
-                    admissions@firesafeinstitute.edu
+                    cifsekanpur@gmail.com
                   </p>
                 </div>
               </div>
