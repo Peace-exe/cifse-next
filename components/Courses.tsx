@@ -26,29 +26,31 @@ const Courses = () => {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <Badge className="bg-red-600 hover:bg-red-700 rounded-full text-neutral-50">
-                  Degree Programs
+                  Diploma Programs
                 </Badge>
                 <GraduationCap className="h-6 w-6 text-red-600" />
               </div>
-              <CardTitle className="text-2xl">Bachelor&apos;s & Master&apos;s Degrees</CardTitle>
+              <CardTitle className="text-2xl">Diploma & Post Diploma Programs</CardTitle>
               <CardDescription className="text-gray-600">
-                Comprehensive 3-4 year programs for in-depth knowledge and research opportunities.
+                Comprehensive 1-2 year programs for in-depth knowledge and research opportunities.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <h4 className="font-semibold">Available Programs:</h4>
                 <ul className="space-y-1 text-sm text-gray-600">
-                  <li>• B.Tech in Fire & Safety Engineering (4 years)</li>
-                  <li>• B.Sc in Fire & Safety Management (3 years)</li>
-                  <li>• M.Tech in Fire & Safety Engineering (2 years)</li>
-                  <li>• M.Sc in Industrial Safety (2 years)</li>
+                  <li>• Fire Engineering (Fire Officer) (1 years)</li>
+                  <li>• Safety Engineering (Safety Officer) (1 years)</li>
+                  <li>• Diploma in Fire & Safety Engineering (1 years)</li>
+                  <li>• Diploma in Environmental, Health & Safety Engineering (2 years)</li>
+                  <li>• Post Diploma in Fire & Safety Engineering (1 years)</li>
+                  
                 </ul>
               </div>
               <div className="flex items-center space-x-4 text-sm">
                 <div className="flex items-center">
                   <Clock className="mr-1 h-4 w-4" />
-                  3-4 Years
+                  1-2 Years
                 </div>
                 <div className="flex items-center">
                   <BookOpen className="mr-1 h-4 w-4" />
@@ -72,23 +74,22 @@ const Courses = () => {
               </div>
               <CardTitle className="text-2xl">Professional Diplomas</CardTitle>
               <CardDescription className="text-gray-600">
-                Focused 1-2 year programs for quick entry into the fire safety industry.
+                Focused 6 months-1 year programs for quick entry into the fire safety industry.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
                 <h4 className="font-semibold">Available Programs:</h4>
                 <ul className="space-y-1 text-sm text-gray-600">
-                  <li>• Diploma in Fire & Safety Engineering (2 years)</li>
-                  <li>• Diploma in Industrial Safety (1 year)</li>
-                  <li>• Advanced Diploma in Fire Prevention (1.5 years)</li>
-                  <li>• Certificate in Emergency Response (6 months)</li>
+                  <li>• Certificate Course In Fire Engineering-Fireman (6 Months)</li>
+                  <li>• Fire Engineering (Fire man) (6 Months)</li>
+                  
                 </ul>
               </div>
               <div className="flex items-center space-x-4 text-sm">
                 <div className="flex items-center">
                   <Clock className="mr-1 h-4 w-4" />
-                  6 months - 2 Years
+                  6 months - 1 Year
                 </div>
                 <div className="flex items-center">
                   <BookOpen className="mr-1 h-4 w-4" />
