@@ -68,11 +68,11 @@ const Courses = () => {
             <CardHeader>
               <div className="flex items-center justify-between">
                 <Badge variant="secondary" className="bg-gray-100 rounded-full">
-                  Diploma Programs
+                  Certification Programs
                 </Badge>
                 <Award className="h-6 w-6 text-orange-600" />
               </div>
-              <CardTitle className="text-2xl">Professional Diplomas</CardTitle>
+              <CardTitle className="text-2xl">Professional Certifications</CardTitle>
               <CardDescription className="text-gray-600">
                 Focused 6 months-1 year programs for quick entry into the fire safety industry.
               </CardDescription>
@@ -81,7 +81,7 @@ const Courses = () => {
               <div className="space-y-2">
                 <h4 className="font-semibold">Available Programs:</h4>
                 <ul className="space-y-1 text-sm text-gray-600">
-                  <li>• Certificate Course In Fire Engineering-Fireman (6 Months)</li>
+                  
                   <li>• Fire Engineering (Fire man) (6 Months)</li>
                   
                 </ul>
